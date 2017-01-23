@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  node-app:
+  node:
     image: node:6
     ports:
       - "3000:3000"
@@ -11,16 +11,13 @@ services:
       - ./:/usr/src/app
     working_dir: /usr/src/app
     depends_on:
-      - mysql
+      - mongo
     links:
-      - mysql:db
+      - mongo:db
     command: /bin/bash -c "npm install && npm start"
-  mysql:
-    image: mysql:5.6
+  mongo:
+    image: mongo:3
     ports:
-      - "3506:3306"
-    environment:
-      - MYSQL_DATABASE=myapp_develop
-      - MYSQL_ROOT_PASSWORD=supersecret
+      - "27017:27017"
     volumes:
-      - ./docker/develop/entrypoint:/docker-entrypoint-initdb.d
+      - ./docker/develop/data:/data/db
