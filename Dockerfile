@@ -1,13 +1,16 @@
 FROM node:6
+MAINTAINER Axel Monroy <xaxelmonroyx@gmail.com>
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN apt-get install git
+RUN git clone https://github.com/AxelMonroyX/workshop-docker-meetup.git /usr/src/app
 
-COPY package.json /usr/src/app/
-RUN npm install
+WORKDIR /usr/src/app/workshop-docker-meetup
+
 ENV DEBUG myapp:*
+RUN npm install
 
-COPY . /usr/src/app
+
+
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
